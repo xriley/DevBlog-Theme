@@ -28,7 +28,7 @@ If you'd like to **use the template without the attribution**, you can [buy the 
 
 
 ## Latest Version
-**v1.0.1** - 11 Feb 2019
+**v1.0** - 11 Feb 2019
 
 [Changelog](https://themes.3rdwavemedia.com/bootstrap-templates/popular/devblog-free-bootstrap-4-blog-template-for-developers/?target=changelog)
 
@@ -56,7 +56,7 @@ If you'd like to **use the template without the attribution**, you can [buy the 
 <img src="https://themes.3rdwavemedia.com/wp-content/uploads/2019/02/devblog-theme-7.jpg" width="400" alt="DevBlog color 7" />
 
 #### Colour 8 (theme-8.css)
-	<img src="https://themes.3rdwavemedia.com/wp-content/uploads/2019/02/devblog-theme-8.jpg" width="400" alt="DevBlog color 8" />
+<img src="https://themes.3rdwavemedia.com/wp-content/uploads/2019/02/devblog-theme-8.jpg" width="400" alt="DevBlog color 8" />
 
 ## Features
 
