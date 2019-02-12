@@ -1,0 +1,140 @@
+.blog-list {
+	.item {
+		.title {
+			font-size: 1.275rem;
+			a {
+			    color: $theme-text-color-primary;	
+			    &:hover {
+				    color: $theme-text-color-primary;
+			    }
+			}
+			
+		}
+		.post-thumb {
+			max-width: 110px;
+			@include border-radius(2px);
+		}
+		
+		
+		.intro {
+			font-size: 0.875rem;
+		}
+		.more-link {
+			font-size: 0.8125rem;
+		}
+	}
+}
+
+.meta {
+	color: $theme-text-color-light;
+	font-size: 0.8125rem;
+	span {
+		display: inline-block;
+		a {
+			color: $theme-text-color-light;
+			&:hover {
+				color: $theme-text-color-secondary;
+			}
+		}
+		&:after {
+			content: "";
+			display: inline-block;
+			width: 3px;
+			height: 3px;
+			@include border-radius(50%);
+			background: $theme-text-color-light;
+			margin-left: 0.5rem;
+			margin-right: 0.5rem;
+			position: relative;
+			top: -3px;
+		}
+		&:last-child {
+			&:after {
+				display:none;
+			}
+		}
+	}
+	
+}
+
+.blog-nav {
+	.nav-link {
+		background: $theme-color-primary;
+		color: #fff;
+		font-size: 1rem;
+		padding: 1rem;
+		font-weight:bold;
+		position: relative;
+		&:hover {
+			background: darken($theme-color-primary, 10%);
+		}
+	}
+	.nav-link-prev {
+		border-right: 1px solid darken($theme-color-primary, 20%);
+	}
+	.arrow-prev {
+		position: absolute;
+		left: 1rem;
+		top: 1.25rem;
+		color: #fff;
+	}
+	
+	.arrow-next {
+		position: absolute;
+		right: 1rem;
+		top: 1.25rem;
+		color: #fff;
+	}
+}
+
+
+.blog-post {
+	.title {
+		font-weight: bold;
+		font-size: 2rem;
+	}
+	.blog-post-body {
+		p, li {
+			font-size: 1.125rem;
+			line-height: 1.6;
+		}
+        h1 {
+	        font-size: 2.125rem;
+        }
+        h2 {
+	        font-size: 2rem;
+        }
+        h3 {
+	        font-size: 1.75rem;
+        }
+        h4 {
+	        font-size: 1.5rem;
+        }
+        h5 {
+	        font-size: 1.25rem;
+        }
+        h6 {
+	        font-size: 1.125rem;
+        }
+	}
+	.image-caption {
+		color: $theme-text-color-light;
+		font-size: 0.875rem;
+		a {
+			color: $theme-text-color-light;
+			text-decoration: underline;
+			&:hover {
+				color: $theme-text-color-secondary;
+			}
+		}
+	}
+	.blockquote {
+		font-family: Georgia,"Times New Roman",Times,serif;
+		border-left: 2px solid $theme-text-color-primary;
+		font-size: 1.5rem;
+		p {
+			font-size: 1.5rem;
+		}
+		
+	}
+}

@@ -1,0 +1,34 @@
+/* ============= Theme Mixins ============= */
+@mixin opacity ($opacity: 0.5) {
+	-webkit-opacity: 	$opacity;
+	-moz-opacity: 		$opacity;
+	opacity: 		$opacity;
+}
+
+@mixin scale ($factor) {
+	-webkit-transform: scale($factor);
+	-moz-transform: 	 scale($factor);
+	-ms-transform: 		 scale($factor);
+	-o-transform: 		 scale($factor);
+}
+
+
+@mixin background-size ($string: contain) {
+    -webkit-background-size: $string;
+    -moz-background-size: $string;
+    -o-background-size: $string;
+    background-size: $string;
+}
+
+@mixin reset-box-sizing ($size:content-box) {
+  &,
+  *,
+  *:before,
+  *:after {
+    -webkit-box-sizing: $size;
+	-moz-box-sizing:    $size;
+	box-sizing:         $size;
+  }
+}
+
+

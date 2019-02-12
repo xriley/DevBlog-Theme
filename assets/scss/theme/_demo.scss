@@ -1,0 +1,153 @@
+/* ======= Configure Style (Remove in production) ======= */
+/* Demo theme colour variables */
+
+$theme-1: #5FCB71;
+$theme-2: #5BC3D5;
+$theme-3: #3B7EEB;
+$theme-4: #5ECCA9;
+$theme-5: #EEA73B;
+$theme-6: #5469C9;
+$theme-7: #5D6BA7;
+$theme-8: #6C51A4;
+
+
+body {
+	overflow-x: hidden;
+}
+
+.config-trigger {
+    position: absolute;
+    top:30px;
+    left: -36px;
+    width: 36px;
+    height: 36px;
+    background: $theme-bg-dark;
+    color: #fff;
+    text-align: center;
+    @include border-radius (4px);
+    @include border-right-radius (0);
+    text-decoration: none;
+
+    &:hover {
+        background: darken($theme-bg-dark, 10%);
+        text-decoration: none;
+        .fa-cog {
+            color: #fff;
+        }
+    }
+    .fa-cog {
+        font-size: 1.25rem;
+        display: block;
+        color: #fff;
+    }
+}
+
+.config-panel {
+    position: absolute;
+    top: 50px;
+    right: -190px;
+    z-index: 30;
+    width: 190px;
+
+    .panel-inner {
+        position: relative;
+        background: $theme-bg-dark;
+        color: #fff;
+        padding: 15px;
+        @include border-top-radius (4px);
+        @include border-right-radius (0);
+    }
+
+    .panel-title {
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #fff;
+    }
+
+    label {
+        color: #fff;
+    }
+
+
+    #color-options {
+        margin-bottom: 0px;
+    }
+
+    #color-options li {
+        a {
+           display: block;
+           width: 28px;
+           height: 28px; 
+           border: 2px solid transparent;
+           margin-top: 5px;
+           &:hover {
+               @include opacity(0.9);
+               border: 2px solid rgba(256, 256, 256, 0.9);
+           }
+        }
+        &.list-inline-item {
+	        margin-right: 5px;
+        }
+        &.active {
+            a {
+                border: 2px solid #fff;
+            }
+        }
+        &.theme-1 {
+            a {
+                background: $theme-1;
+            }
+        }
+        &.theme-2 {
+            a {
+                background-color: $theme-2;
+            }            
+        }
+        &.theme-3 {
+            a {
+                background-color: $theme-3;
+            }
+        }
+        &.theme-4 {
+            a {
+                background-color: $theme-4;
+            }
+        }
+        &.theme-5 {
+            a {
+                background-color: $theme-5;
+            }
+        }
+        &.theme-6 {
+            a {
+                background-color: $theme-6;
+            }
+        }
+        &.theme-7 {
+            a {
+                background-color: $theme-7;
+            }
+        }
+        
+        &.theme-8 {
+            a {
+                background-color: $theme-8;
+            }
+        }
+        
+       
+              
+    }
+    
+    .close {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        color: #fff;
+        .fa {
+            color: #fff;
+        }
+    }
+}
