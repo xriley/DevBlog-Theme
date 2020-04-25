@@ -1,10 +1,14 @@
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.3.0): tooltip.js
+ * Bootstrap (v4.4.1): tooltip.js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
 
+import {
+  DefaultWhitelist,
+  sanitizeHtml
+} from './tools/sanitizer'
 import $ from 'jquery'
 import Popper from 'popper.js'
 import Util from './util'
@@ -15,13 +19,14 @@ import Util from './util'
  * ------------------------------------------------------------------------
  */
 
-const NAME               = 'tooltip'
-const VERSION            = '4.3.0'
-const DATA_KEY           = 'bs.tooltip'
-const EVENT_KEY          = `.${DATA_KEY}`
-const JQUERY_NO_CONFLICT = $.fn[NAME]
-const CLASS_PREFIX       = 'bs-tooltip'
-const BSCLS_PREFIX_REGEX = new RegExp(`(^|\\s)${CLASS_PREFIX}\\S+`, 'g')
+const NAME                  = 'tooltip'
+const VERSION               = '4.4.1'
+const DATA_KEY              = 'bs.tooltip'
+const EVENT_KEY             = `.${DATA_KEY}`
+const JQUERY_NO_CONFLICT    = $.fn[NAME]
+const CLASS_PREFIX          = 'bs-tooltip'
+const BSCLS_PREFIX_REGEX    = new RegExp(`(^|\\s)${CLASS_PREFIX}\\S+`, 'g')
+const DISALLOWED_ATTRIBUTES = ['sanitize', 'whiteList', 'sanitizeFn']
 
 const DefaultType = {
   animation         : 'boolean',
@@ -35,7 +40,11 @@ const DefaultType = {
   offset            : '(number|string|function)',
   container         : '(string|element|boolean)',
   fallbackPlacement : '(string|array)',
-  boundary          : '(string|element)'
+  boundary          : '(string|element)',
+  sanitize          : 'boolean',
+  sanitizeFn        : '(null|function)',
+  whiteList         : 'object',
+  popperConfig      : '(null|object)'
 }
 
 const AttachmentMap = {
@@ -60,7 +69,11 @@ const Default = {
   offset            : 0,
   container         : false,
   fallbackPlacement : 'flip',
-  boundary          : 'scrollParent'
+  boundary          : 'scrollParent',
+  sanitize          : true,
+  sanitizeFn        : null,
+  whiteList         : DefaultWhitelist,
+  popperConfig      : null
 }
 
 const HoverState = {
@@ -108,10 +121,6 @@ const Trigger = {
 
 class Tooltip {
   constructor(element, config) {
-    /**
-     * Check for Popper dependency
-     * Popper - https://popper.js.org
-     */
     if (typeof Popper === 'undefined') {
       throw new TypeError('Bootstrap\'s tooltips require Popper.js (https://popper.js.org/)')
     }
@@ -215,7 +224,7 @@ class Tooltip {
     $.removeData(this.element, this.constructor.DATA_KEY)
 
     $(this.element).off(this.constructor.EVENT_KEY)
-    $(this.element).closest('.modal').off('hide.bs.modal')
+    $(this.element).closest('.modal').off('hide.bs.modal', this._hideModalHandler)
 
     if (this.tip) {
       $(this.tip).remove()
@@ -225,7 +234,7 @@ class Tooltip {
     this._timeout       = null
     this._hoverState    = null
     this._activeTrigger = null
-    if (this._popper !== null) {
+    if (this._popper) {
       this._popper.destroy()
     }
 
@@ -282,27 +291,7 @@ class Tooltip {
 
       $(this.element).trigger(this.constructor.Event.INSERTED)
 
-      this._popper = new Popper(this.element, tip, {
-        placement: attachment,
-        modifiers: {
-          offset: this._getOffset(),
-          flip: {
-            behavior: this.config.fallbackPlacement
-          },
-          arrow: {
-            element: Selector.ARROW
-          },
-          preventOverflow: {
-            boundariesElement: this.config.boundary
-          }
-        },
-        onCreate: (data) => {
-          if (data.originalPlacement !== data.placement) {
-            this._handlePopperPlacementChange(data)
-          }
-        },
-        onUpdate: (data) => this._handlePopperPlacementChange(data)
-      })
+      this._popper = new Popper(this.element, tip, this._getPopperConfig(attachment))
 
       $(tip).addClass(ClassName.SHOW)
 
@@ -419,18 +408,27 @@ class Tooltip {
   }
 
   setElementContent($element, content) {
-    const html = this.config.html
     if (typeof content === 'object' && (content.nodeType || content.jquery)) {
       // Content is a DOM node or a jQuery
-      if (html) {
+      if (this.config.html) {
         if (!$(content).parent().is($element)) {
           $element.empty().append(content)
         }
       } else {
         $element.text($(content).text())
       }
+
+      return
+    }
+
+    if (this.config.html) {
+      if (this.config.sanitize) {
+        content = sanitizeHtml(content, this.config.whiteList, this.config.sanitizeFn)
+      }
+
+      $element.html(content)
     } else {
-      $element[html ? 'html' : 'text'](content)
+      $element.text(content)
     }
   }
 
@@ -447,6 +445,35 @@ class Tooltip {
   }
 
   // Private
+
+  _getPopperConfig(attachment) {
+    const defaultBsConfig = {
+      placement: attachment,
+      modifiers: {
+        offset: this._getOffset(),
+        flip: {
+          behavior: this.config.fallbackPlacement
+        },
+        arrow: {
+          element: Selector.ARROW
+        },
+        preventOverflow: {
+          boundariesElement: this.config.boundary
+        }
+      },
+      onCreate: (data) => {
+        if (data.originalPlacement !== data.placement) {
+          this._handlePopperPlacementChange(data)
+        }
+      },
+      onUpdate: (data) => this._handlePopperPlacementChange(data)
+    }
+
+    return {
+      ...defaultBsConfig,
+      ...this.config.popperConfig
+    }
+  }
 
   _getOffset() {
     const offset = {}
@@ -515,13 +542,15 @@ class Tooltip {
       }
     })
 
+    this._hideModalHandler = () => {
+      if (this.element) {
+        this.hide()
+      }
+    }
+
     $(this.element).closest('.modal').on(
       'hide.bs.modal',
-      () => {
-        if (this.element) {
-          this.hide()
-        }
-      }
+      this._hideModalHandler
     )
 
     if (this.config.selector) {
@@ -636,9 +665,18 @@ class Tooltip {
   }
 
   _getConfig(config) {
+    const dataAttributes = $(this.element).data()
+
+    Object.keys(dataAttributes)
+      .forEach((dataAttr) => {
+        if (DISALLOWED_ATTRIBUTES.indexOf(dataAttr) !== -1) {
+          delete dataAttributes[dataAttr]
+        }
+      })
+
     config = {
       ...this.constructor.Default,
-      ...$(this.element).data(),
+      ...dataAttributes,
       ...typeof config === 'object' && config ? config : {}
     }
 
@@ -662,6 +700,10 @@ class Tooltip {
       config,
       this.constructor.DefaultType
     )
+
+    if (config.sanitize) {
+      config.template = sanitizeHtml(config.template, config.whiteList, config.sanitizeFn)
+    }
 
     return config
   }
