@@ -82,6 +82,12 @@ h1, h2, h3, h4, h5, h6 {
 	    padding: 2rem 1rem;
     }
     
+    .navbar-toggler {
+	    &:focus {
+		    outline: none;
+	    }
+    }
+    
     .navbar-dark {
 	    
 	    .navbar-toggler {
