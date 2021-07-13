@@ -13,6 +13,36 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
 
+a {
+	color: $theme-color-primary;
+	
+	&:hover {
+		color: darken($theme-color-primary, 15%);
+	}
+	
+	&.no-text-decoration {
+		text-decoration: none;
+	}
+}
+
+
+a.text-link {
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+
+.single-col-max-width {
+	max-width: $single-col-max-width;
+}
+
+
+.single-form-max-width {
+	max-width: $single-form-max-width;
+}
+
 
 .btn {
 	font-weight: bold;
@@ -27,7 +57,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-primary {
 	color: #fff;
+	&:hover, &:active {
+		color: #fff;
+		background: darken($theme-color-primary, 5%);
+	}
 }
+
 
 .form-control {
 	padding-top: 0.875rem;
@@ -84,7 +119,7 @@ h1, h2, h3, h4, h5, h6 {
     
     .navbar-toggler {
 	    &:focus {
-		    outline: none;
+		    box-shadow: none;
 	    }
     }
     
@@ -110,8 +145,8 @@ h1, h2, h3, h4, h5, h6 {
     
     .nav-item {
 	    font-weight: bold;
-	    &.active {
-		    .nav-link {
+	    .nav-link {
+		    &.active {
 			   
 		       color: rgba(0, 0, 0, 0.5); 
 		       &:hover {
@@ -124,7 +159,7 @@ h1, h2, h3, h4, h5, h6 {
 	    .nav-link {
 		    color: rgba(256, 256, 256, 0.8);
 		    &:hover {
-			    text-decoration: underline;
+			    //text-decoration: underline;
 			    color: rgba(0, 0, 0, 0.6); 
 		    }
 	    }

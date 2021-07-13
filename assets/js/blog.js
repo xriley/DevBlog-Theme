@@ -1,9 +1,9 @@
-$(document).ready(function() {
-	
-	/* ======= Highlight.js Plugin ======= */ 
-    /* Ref: https://highlightjs.org/usage/ */     
-    $('pre code').each(function(i, block) {
-	    hljs.highlightBlock(block);
-	 });
+"use strict";
 
+/* ======= Highlight.js Plugin ======= */ 
+/* Ref: https://highlightjs.org/usage/ */ 
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelectorAll('pre code').forEach((block) => {
+    hljs.highlightBlock(block);
+  });
 });
