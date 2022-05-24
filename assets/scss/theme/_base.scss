@@ -48,11 +48,13 @@ a.text-link {
 	font-weight: bold;
 	padding: .375rem 1rem;
 	height: 2.75rem;
-	@include transition(all 0.4s ease-in-out);
+	outline: none;
 }
 
 .btn:focus, .btn.focus {
 	box-shadow: none !important;
+	@include transition(all 0.4s ease-in-out);
+	outline: none;
 }
 
 .btn-primary {
@@ -69,6 +71,7 @@ a.text-link {
 	padding-bottom: 0.875rem;
 	height: 2.75rem;
 	border-color: $theme-border-color;
+	@include placeholder ($theme-text-color-light);
 }
 
 .theme-bg-light {
