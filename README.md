@@ -67,7 +67,7 @@ If you'd like to **use the template without the attribution link**, you can [buy
 -  Built on Bootstrap 5
 -  **SCSS** source files included
 -  8 Colour Schemes
--  1000+ FontAwesome 5 icons
+-  FontAwesome 6 icons
 -  Compatible with all modern browsers
 
 ## Credits
