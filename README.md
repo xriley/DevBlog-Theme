@@ -30,7 +30,7 @@ If you'd like to **use the template without the attribution link**, you can [buy
 
 
 ## Latest Version
-**Bootstrap v2.0** - 2022-05-24
+**Bootstrap v3.0** - 2023-06-23
 
 [Changelog](https://themes.3rdwavemedia.com/bootstrap-templates/popular/devblog-free-bootstrap-4-blog-template-for-developers/?target=changelog)
 
